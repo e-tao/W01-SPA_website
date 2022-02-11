@@ -1,4 +1,4 @@
-# webpack-first
+# W01-Final Project
 
 Empty project.
 
