@@ -1,4 +1,51 @@
-h1 {
-  color: white;
-  background-color: black;
+*{
+    margin:0;
+    padding: 0;
 }
+
+#header-container{
+    width:100vw;
+    height:250px;
+    background-color: #00B5FC;
+    display: flex;
+}
+
+#header-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#header-container>img{
+    height:200px;
+    position: relative;
+    top:20px;
+    filter: invert(1);
+}
+
+#header-title, #header-quote{
+    font-size: 40pt;
+    color: aliceblue;
+}
+
+#header-quote{
+    font-size:20pt;
+    margin-left: 100px;
+}
+
+#nav{
+    position: sticky;
+    height: 50px;
+    background-color: #00B5FC;
+    color: aliceblue;
+    
+    display: flex;
+    justify-content:flex-start;
+}
+
+.nav-item{
+    margin-left: 30px;
+    margin-top:10px;
+}
+

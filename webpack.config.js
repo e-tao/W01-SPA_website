@@ -2,10 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
-  entry: './src/js/index.js',
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    assetModuleFilename: 'assets/[name][ext]'
   },
   module: {
     rules: [
@@ -22,11 +23,16 @@ const config = {
         ]
       },
       {
+        test: /\.(png|jpe?g|gif)$/i,
+        type: 'asset/resource'
+      },
+      {
         test: /\.hbs$/,
         use: [{
           "loader": 'handlebars-loader',
           "options": { helperDirs: path.resolve(__dirname, 'helpers') }
-        }]
+        }
+        ]
       }
     ]
   }
