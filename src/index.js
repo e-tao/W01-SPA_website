@@ -4,9 +4,9 @@ import headerTemplate from "./hbs/header.hbs";
 import navTemplate from "./hbs/nav.hbs";
 import mainTemplate from "./hbs/main.hbs";
 import footerTemplate from "./hbs/footer.hbs";
-import "./img/logo.png";
 import header from "./js/header";
 import nav from "./js/nav";
+import footer from "./js/footer";
 
 
 const appEl = document.getElementById("app");
@@ -20,7 +20,7 @@ const footerEl = document.querySelector("footer");
 headerEl.innerHTML = headerTemplate(header);
 navEl.innerHTML = navTemplate(nav);
 mainEl.innerHTML = mainTemplate();
-footerEl.innerHTML = footerTemplate();
+footerEl.innerHTML = footerTemplate(footer);
 
 
 
