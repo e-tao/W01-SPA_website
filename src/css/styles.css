@@ -55,7 +55,68 @@
 
 
 #main-container{
-    height: 1000px;
+
+    display: grid;
+    grid-template-columns: (3fr 1fr);
+    grid-template-areas: 
+    "left left left right";
+}
+
+#main-left{
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+}
+
+#current-market, .news-item{
+    border:1px solid #B05D00;
+    border-radius: 5px;
+    margin: 15px 0px;
+    height: 200px;
+}
+
+#news{
+    display: flex;
+    justify-content:space-between;
+}
+
+#main-right{
+    grid-area: right;
+    display: flex;
+    flex-direction: column;
+}
+
+#live-data, #subscribe{
+    margin:15px;
+    height:100px;
+    border-radius: 5px;
+}
+
+#live-data{
+    height:400px;
+}
+
+#subscribe{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#email{
+    height:30px;
+    margin-left: 20px;
+}
+
+#button{
+    border: none;
+    width:100px;
+    height:30px;
+    font-size: 12pt;
+    background-color: #FC8500;
+    color: aliceblue;
+    border-radius: 20px;
+    margin-left: 20px;
+    cursor: pointer;
 }
 
 #footer-container{
