@@ -1,8 +1,25 @@
 <div id="current-market">
-    live data field goes here;
-</div>
-<div id="news">
-    <div class="news-item">JSON news feed goes here</div>
-    <div class="news-item">JSON news feed goes here</div>
-    <div class="news-item">JSON news feed goes here</div>
+    <table id="share-data">
+        <tr>
+            <th>SYMBOL</th>
+            <th>OPEN</th>
+            <th>HIGH</th>
+            <th>LOW</th>
+            <th>CLOSE</th>
+            <th>VOLUME</th>
+            <th>%CHANGE</th>
+
+        </tr>
+        {{#each .}}
+        <tr>
+            <td>{{Symbol}} </td>
+            <td>{{Open}}</td>
+            <td>{{DayHigh}}</td>
+            <td>{{DayLow}}</td>
+            <td>{{Price}}</td>
+            <td>{{Volume}}</td>
+            <td>{{ChangePercent}}</td>
+        </tr>
+        {{/each}}
+    </table>
 </div>

@@ -1,4 +1,4 @@
 export default {
     name: "DAYDREAMER INVESTMENT",
-    quote: "Compound interest is the most powerful force in the universe."
+    quote: "If you are with the herd you are the 🐑 of Wall Street"
 }

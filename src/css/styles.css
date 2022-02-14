@@ -52,11 +52,16 @@ ul#nav>li{
     margin-left: 30px;
     margin-top:10px;
     list-style-type: none;
+    cursor: pointer;
 }
 
+#nav>li:hover, .active{
+    text-decoration: underline;
+    text-decoration-color: #FC8500;
+    text-decoration-thickness: 3px;
+}
 
 #main-container{
-
     display: grid;
     grid-template-columns: (3fr 1fr);
     grid-template-areas: 
@@ -69,31 +74,19 @@ ul#nav>li{
     flex-direction: column;
 }
 
-#current-market, .news-item{
-    border:1px solid #B05D00;
-    border-radius: 5px;
-    margin: 15px 0px;
-    height: 200px;
-}
-
-#news{
-    display: flex;
-    justify-content:space-between;
-}
-
 #main-right{
     grid-area: right;
     display: flex;
     flex-direction: column;
 }
 
-#live-data, #subscribe{
+#news, #subscribe{
     margin:15px;
     height:100px;
     border-radius: 5px;
 }
 
-#live-data{
+#news{
     height:400px;
 }
 
@@ -150,3 +143,23 @@ ul#nav>li{
     margin-right: 20px;
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin:15px 5px;
+  }
+  
+  td, th {
+    border: 1px solid #19BEFF;
+    text-align: right;
+    padding: 8px;
+  }
+
+  th{
+      text-align: center;
+  }
+  
+  tr:nth-child(even) {
+    background-color: rgba(25,190,255,0.4);
+    
+  }
