@@ -1,5 +1,5 @@
-<div id="nav">
+<ul id="nav">
     {{#each .}}
-    <div class="{{class}}">{{text}}</div>
+    <li id="{{id}}" class="{{class}}" data-nav="{{id}}">{{text}}</li>
     {{/each}}
-</div>
+</ul>
