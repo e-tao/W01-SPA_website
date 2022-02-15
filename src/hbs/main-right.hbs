@@ -1,16 +1,15 @@
-<div id="main-container">
-    <div id="main-left"></div>
+<div id="news">
 
-    <div id="main-right">
-        <div id="news">
-            live forex data or other table presentation
-        </div>
-        <div id="subscribe">
-            <div>Newsletter signup</div>
-            <div><input type="text" value="Enter your email..." id="email"><input type="submit" value="subscribe"
-                    id="button"></div>
-        </div>
+    {{#each .}}
+    {{#if attributes.gettyImageUrl}}
+    <div><img src="{{attributes.gettyImageUrl}}" />{{attributes.title}}</div>
+    {{/if}}
+    {{/each}}
 
+    <div id="subscribe">
+        <div>Newsletter signup</div>
+        <div><input type="text" value="Enter your email..." id="email"><input type="submit" value="subscribe"
+                id="button">
+        </div>
     </div>
-
 </div>
