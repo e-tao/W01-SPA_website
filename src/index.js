@@ -11,20 +11,24 @@ import header from "./js/header";
 import nav from "./js/nav";
 import footer from "./js/footer";
 
+
+const newsKey = "201db791a3msh158353c883f6f50p199751jsnd1cec647662f";
+const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE";
+
+
 const appEl = document.getElementById("app");
 appEl.innerHTML = layoutTemplate();
 
 const headerEl = document.querySelector("header");
 const navEl = document.querySelector("nav");
-//const mainEl = document.querySelector("main");
 const footerEl = document.querySelector("footer");
 
 headerEl.innerHTML = headerTemplate(header);
-//mainREl.innerHTML = rightTemplate();
 footerEl.innerHTML = footerTemplate(footer);
 
 const mainLEl = document.getElementById("main-left");
 const mainREl = document.getElementById("main-right");
+
 
 const pages = {
     "home": { title: "Welcome Home", content: leftTemplate() },
@@ -32,6 +36,7 @@ const pages = {
 };
 
 let active;
+let initArray = ['msft', 'aapl', 'tsla', 'amzn', 'f'];
 
 
 let navigate = function (page) {
@@ -62,28 +67,39 @@ let navigate = function (page) {
 
 
 navigate("home");
-
+//stockData();
+//stockNews()
 
 async function stockData() {
-    const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE";
+    console.log(initArray);
+    let fetchResArray = [];
+    let resultsArray = [];
+    let jsonData;
+    let results;
 
-    let sFetch1 = await fetch("https://api.aletheiaapi.com/StockData?symbol=msft&summary=true", { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
-    let sFetch2 = await fetch("https://api.aletheiaapi.com/StockData?symbol=aapl&summary=true", { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
-    let sFetch3 = await fetch("https://api.aletheiaapi.com/StockData?symbol=tsla&summary=true", { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
-    let sFetch4 = await fetch("https://api.aletheiaapi.com/StockData?symbol=amzn&summary=true", { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
-    let sFetch5 = await fetch("https://api.aletheiaapi.com/StockData?symbol=f&summary=true", { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
+    for (let i = 0; i < initArray.length; i++) {
+        let fetchRes = await fetch(`https://api.aletheiaapi.com/StockData?symbol=${initArray[i].trim()}&summary=true`, { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
 
-    let fetchRes = await Promise.all([sFetch1, sFetch2, sFetch3, sFetch4, sFetch5]);
-    let jsonData = await Promise.all([fetchRes[0].json(), fetchRes[1].json(), fetchRes[2].json(), fetchRes[3].json(), fetchRes[4].json()]);
+        fetchResArray.push(fetchRes);
+        results = await Promise.all(fetchResArray);
+    }
+
+    for (let i = 0; i < results.length; i++) {
+        resultsArray.push(results[i].json());
+    }
+
+    jsonData = await Promise.all(resultsArray);
+    console.log(jsonData);
+
     mainLEl.innerHTML = leftTemplate(jsonData);
     addClick();
-}
+    addStock();
 
-stockData();
+}
 
 async function stockNews(selected) {
     let selection = selected;
-    const newsKey = "201db791a3msh158353c883f6f50p199751jsnd1cec647662f";
+
 
     let fetchUrl;
     if (selection !== undefined) {
@@ -104,13 +120,31 @@ async function stockNews(selected) {
     })
 
     let jsonData = await nFetch.json();
-    console.log(jsonData.data);
     mainREl.innerHTML = rightTemplate(jsonData.data);
 }
 
-stockNews()
+
+function addStock() {
+    let addBtn = document.getElementById("add-stock");
+    let stockSymbolTxt = document.getElementById("stock-symbol");
+    let errorMsg;
+
+    addBtn.addEventListener("click", () => {
+        if (stockSymbolTxt.value != "") {
+            initArray.push(stockSymbolTxt.value);
+            if (errorMsg != undefined) {
+                errorMsg.innerHTML = "";
+            }
+            stockData();
+        } else {
+            errorMsg = document.getElementById("input-error");
+            errorMsg.innerHTML = "you can not add empty string to the watch list"
+        }
+    })
+}
 
 function addClick() {
+    console.log("adding click");
     let table = document.getElementById("share-data");
     let selectedStock;
     for (let i = 1, x = table.rows.length; i < x; i++) {
@@ -118,7 +152,6 @@ function addClick() {
             table.rows[i].cells[j].addEventListener("click", function () {
                 selectedStock = this.innerHTML;
                 stockNews(selectedStock);
-
                 //console.log(selectedStock);
             });
         }
