@@ -35,6 +35,7 @@ let active;
 
 
 let navigate = function (page) {
+    stockNews(undefined)
     active = page;
     nav.forEach(function (el) {
         if (el.id == active) {
@@ -81,13 +82,20 @@ async function stockData() {
 stockData();
 
 async function stockNews(selected) {
+    let selection = selected;
     const newsKey = "201db791a3msh158353c883f6f50p199751jsnd1cec647662f";
-    console.log(selected);
 
-    selected = selected == null ? "MSFT" : selected;
-    console.log(selected);
+    let fetchUrl;
+    if (selection !== undefined) {
+        console.log("selection not false");
+        fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=" + selection.trim() + "&until=0&since=0&size=4&number=1"
+    } else {
+        console.log("selection false");
+        fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-trending?until=0&since=0&size=4";
 
-    let nFetch = await fetch("https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=" + selected.trim() + "&until=0&since=0&size=4&number=1", {
+    }
+
+    let nFetch = await fetch(fetchUrl, {
         "method": "GET",
         "headers": {
             "x-rapidapi-host": "seeking-alpha.p.rapidapi.com",
@@ -110,6 +118,7 @@ function addClick() {
             table.rows[i].cells[j].addEventListener("click", function () {
                 selectedStock = this.innerHTML;
                 stockNews(selectedStock);
+
                 //console.log(selectedStock);
             });
         }
