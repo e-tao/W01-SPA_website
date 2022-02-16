@@ -4,17 +4,16 @@ import headerTemplate from "./hbs/header.hbs";
 import navTemplate from "./hbs/nav.hbs";
 import leftTemplate from "./hbs/main-left.hbs";
 import rightTemplate from "./hbs/main-right.hbs";
-//import mainTemplate from "./hbs/main.hbs";
 import footerTemplate from "./hbs/footer.hbs";
+import retirementPage from "./hbs/retirement.hbs";
 import aboutPage from "./hbs/about.hbs";
 import header from "./js/header";
 import nav from "./js/nav";
 import footer from "./js/footer";
-
+import calculate from "./js/retirement";
 
 const newsKey = "201db791a3msh158353c883f6f50p199751jsnd1cec647662f";
 const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE";
-
 
 const appEl = document.getElementById("app");
 appEl.innerHTML = layoutTemplate();
@@ -32,6 +31,7 @@ const mainREl = document.getElementById("main-right");
 
 const pages = {
     "home": { title: "Welcome Home", content: leftTemplate() },
+    "retirement": { title: "Shepherd's Retirement", content: retirementPage() },
     "about": { title: "About the website", content: aboutPage() }
 };
 
@@ -52,8 +52,11 @@ let navigate = function (page) {
     navEl.innerHTML = navTemplate(nav);
     mainLEl.innerHTML = pages[page].content;
     if (page === "home") {
-        stockData();
-        stockNews();
+        //stockData();
+        //stockNews();
+    } else if (page === 'retirement') {
+        let calbtn = document.getElementById('calculate');
+        calbtn.addEventListener('click', calculate);
     }
 
     let menuItems = document.querySelectorAll("ul#nav>li");
@@ -65,13 +68,10 @@ let navigate = function (page) {
     });
 };
 
-
 navigate("home");
-//stockData();
-//stockNews()
 
 async function stockData() {
-    console.log(initArray);
+    //console.log(initArray);
     let fetchResArray = [];
     let resultsArray = [];
     let jsonData;
@@ -100,7 +100,6 @@ async function stockData() {
 async function stockNews(selected) {
     let selection = selected;
 
-
     let fetchUrl;
     if (selection !== undefined) {
         console.log("selection not false");
@@ -118,34 +117,35 @@ async function stockNews(selected) {
             "x-rapidapi-key": newsKey
         }
     })
-
     let jsonData = await nFetch.json();
     mainREl.innerHTML = rightTemplate(jsonData.data);
 }
 
-
 function addStock() {
     let addBtn = document.getElementById("add-stock");
     let stockSymbolTxt = document.getElementById("stock-symbol");
-    let errorMsg;
+    let errorMsg = document.getElementById("input-error")
 
     addBtn.addEventListener("click", () => {
         if (stockSymbolTxt.value != "") {
             initArray.push(stockSymbolTxt.value);
             if (errorMsg != undefined) {
-                errorMsg.innerHTML = "";
+                errorMsg.style.display = 'none';
             }
             stockData();
         } else {
-            errorMsg = document.getElementById("input-error");
-            errorMsg.innerHTML = "you can not add empty string to the watch list"
+            errorMsg.innerHTML = "error: add empty string to the watch list."
         }
     })
 }
 
 function addClick() {
-    console.log("adding click");
+    //console.log("adding click");
     let table = document.getElementById("share-data");
+    let symbol = document.getElementsByClassName("symbol");
+    for (let a = 0; a < symbol.length; a++) {
+        symbol.item(a).style.cursor = "pointer";
+    }
     let selectedStock;
     for (let i = 1, x = table.rows.length; i < x; i++) {
         for (let j = 0, y = 1; j < y; j++) {
@@ -157,6 +157,7 @@ function addClick() {
         }
     }
 }
+
 
 
 

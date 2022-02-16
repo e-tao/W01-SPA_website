@@ -8,11 +8,10 @@
             <th>CLOSE</th>
             <th>VOLUME</th>
             <th>%CHANGE</th>
-
         </tr>
         {{#each .}}
         <tr>
-            <td>{{Symbol}} </td>
+            <td class="symbol">{{Symbol}} </td>
             <td>{{Open}}</td>
             <td>{{DayHigh}}</td>
             <td>{{DayLow}}</td>
@@ -23,6 +22,7 @@
         {{/each}}
     </table>
 
-    <input type="text" id="stock-symbol" /><button id="add-stock">ADD</button>
+    <div id="add-symbol"><input type="text" id="stock-symbol" /><button id="add-stock"> + </button></div>
+
     <div id="input-error"></div>
 </div>

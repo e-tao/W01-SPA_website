@@ -76,6 +76,29 @@ ul#nav>li{
     flex-direction: column;
 }
 
+#current-market{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#add-symbol{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#input-error, #result{
+    width: 400px;
+    margin: 20px;
+    border-radius: 3px;
+    color:red;
+    font-size: 14pt;
+    text-align: center;
+    padding: 5px
+}
+
 #main-right{
     width: 380px;
     grid-area: right;
@@ -101,6 +124,7 @@ ul#nav>li{
     width:100px;
     margin:5px;
     float:left;
+    border-radius: 3px;
 }
 
 #news>div{
@@ -118,7 +142,7 @@ ul#nav>li{
     margin-left: 20px;
 }
 
-#button{
+#button, #add-stock, #calculate{
     border: none;
     width:100px;
     height:30px;
@@ -129,6 +153,14 @@ ul#nav>li{
     margin-left: 20px;
     cursor: pointer;
 }
+
+#add-stock {
+    width: 30px;
+    border-radius: 30px;
+    font-size: 16pt;
+    font-weight: bold;
+}
+
 
 #footer-container{
     display: flex;
@@ -180,3 +212,38 @@ table {
     background-color: rgba(25,190,255,0.4);
     
   }
+
+  #retirement-container, #about-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin:30px;
+  }
+
+  #retirement-container>p, #about-container>p, li{
+      text-align: justify;
+      font-size: 15pt;
+      margin-bottom: 21px;
+  }
+
+  li{
+    margin-bottom: 0;
+  }
+
+  ul{
+    list-style-type: none;
+  }
+
+  #data-input>.title{
+      text-align: left;
+      margin-bottom: 15px;
+      font-size: 15pt;
+  }
+
+  #data-input>div>input, #compound, #compound>option{
+      height:25px;
+      margin-left: 20px;
+  }
+
+  
+
