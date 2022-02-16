@@ -1,5 +1,5 @@
 export default [
     { text: "HOME", id: "home" },
-    { text: "RETIREMENT", id: "retirement" },
+    { text: "CALCULATOR", id: "calculator" },
     { text: "ABOUT", id: "about" }
 ]

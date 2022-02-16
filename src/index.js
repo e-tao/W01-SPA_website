@@ -5,14 +5,14 @@ import navTemplate from "./hbs/nav.hbs";
 import leftTemplate from "./hbs/main-left.hbs";
 import rightTemplate from "./hbs/main-right.hbs";
 import footerTemplate from "./hbs/footer.hbs";
-import retirementPage from "./hbs/retirement.hbs";
+import calculatorPage from "./hbs/calculator.hbs";
 import aboutPage from "./hbs/about.hbs";
 import header from "./js/header";
 import nav from "./js/nav";
 import footer from "./js/footer";
-import calculate from "./js/retirement";
+import calculate from "./js/calculator";
 
-const newsKey = "201db791a3msh158353c883f6f50p199751jsnd1cec647662f";
+const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
 const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE";
 
 const appEl = document.getElementById("app");
@@ -31,13 +31,15 @@ const mainREl = document.getElementById("main-right");
 
 const pages = {
     "home": { title: "Welcome Home", content: leftTemplate() },
-    "retirement": { title: "Shepherd's Retirement", content: retirementPage() },
+    "calculator": { title: "Shepherd's Retirement", content: calculatorPage() },
     "about": { title: "About the website", content: aboutPage() }
 };
 
 let active;
 let initArray = ['msft', 'aapl', 'tsla', 'amzn', 'f'];
-
+let diffArray = [];
+let timestamp = new Date();
+let updateData = false;
 
 let navigate = function (page) {
     stockNews(undefined)
@@ -52,8 +54,9 @@ let navigate = function (page) {
     navEl.innerHTML = navTemplate(nav);
     mainLEl.innerHTML = pages[page].content;
     if (page === "home") {
-        //stockData();
-        //stockNews();
+        initWatchlist();
+        stockData();
+        stockNews();
     } else if (page === 'retirement') {
         let calbtn = document.getElementById('calculate');
         calbtn.addEventListener('click', calculate);
@@ -62,7 +65,6 @@ let navigate = function (page) {
     let menuItems = document.querySelectorAll("ul#nav>li");
     menuItems.forEach(function (el) {
         el.addEventListener("click", function () {
-            //console.log("clicked");
             navigate(el.dataset.nav);
         });
     });
@@ -71,30 +73,55 @@ let navigate = function (page) {
 navigate("home");
 
 async function stockData() {
-    //console.log(initArray);
-    let fetchResArray = [];
-    let resultsArray = [];
-    let jsonData;
-    let results;
+    let fetchResArray = [], resultsArray = [];
+    let jsonData, results;
 
-    for (let i = 0; i < initArray.length; i++) {
-        let fetchRes = await fetch(`https://api.aletheiaapi.com/StockData?symbol=${initArray[i].trim()}&summary=true`, { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
+    if (localStorage.getItem('timestamp') === null) {
+        localStorage.setItem('timestamp', timestamp.getDate());
+    } else {
+        let storeDate = localStorage.getItem('timestamp');
+        let today = timestamp.getDate();
 
-        fetchResArray.push(fetchRes);
-        results = await Promise.all(fetchResArray);
+        if (today != storeDate) {
+            updateData = true;
+        }
+
     }
 
-    for (let i = 0; i < results.length; i++) {
-        resultsArray.push(results[i].json());
+    if (localStorage.getItem("stockData") === null || updateData) {
+        for (let i = 0; i < initArray.length; i++) {
+            let fetchRes = await fetch(`https://api.aletheiaapi.com/StockData?symbol=${initArray[i].trim()}&summary=true`, { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
+            fetchResArray.push(fetchRes);
+            results = await Promise.all(fetchResArray);
+        }
+
+        for (let i = 0; i < results.length; i++) {
+            resultsArray.push(results[i].json());
+        }
+
+        jsonData = await Promise.all(resultsArray);
+        localStorage.setItem("stockData", JSON.stringify(jsonData));
+    }
+    else if (diffArray.length != 0) {
+        //console.log(diffArray);
+        let fetchRes = await fetch(`https://api.aletheiaapi.com/StockData?symbol=${diffArray[0].trim()}&summary=true`, { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
+
+        diffArray = [];
+
+        let addedStock = await fetchRes.json();
+        jsonData = JSON.parse(localStorage.getItem("stockData"));
+        jsonData[jsonData.length] = addedStock;
+        localStorage.setItem("stockData", JSON.stringify(jsonData));
+        jsonData = JSON.parse(localStorage.getItem("stockData"));
     }
 
-    jsonData = await Promise.all(resultsArray);
-    console.log(jsonData);
+    else {
+        jsonData = JSON.parse(localStorage.getItem("stockData"));
+    }
 
     mainLEl.innerHTML = leftTemplate(jsonData);
     addClick();
     addStock();
-
 }
 
 async function stockNews(selected) {
@@ -102,12 +129,9 @@ async function stockNews(selected) {
 
     let fetchUrl;
     if (selection !== undefined) {
-        console.log("selection not false");
         fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=" + selection.trim() + "&until=0&since=0&size=4&number=1"
     } else {
-        console.log("selection false");
         fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-trending?until=0&since=0&size=4";
-
     }
 
     let nFetch = await fetch(fetchUrl, {
@@ -128,19 +152,26 @@ function addStock() {
 
     addBtn.addEventListener("click", () => {
         if (stockSymbolTxt.value != "") {
-            initArray.push(stockSymbolTxt.value);
+            if (!initArray.includes(stockSymbolTxt.value.toLowerCase())) {
+                initArray.push(stockSymbolTxt.value.toLowerCase());
+                diffArray.push(stockSymbolTxt.value.toLowerCase());
+                addToWatchlist();
+            } else {
+                console.log("error");
+                errorMsg.innerHTML = "error: add empty string to the watch list.";
+            }
+
             if (errorMsg != undefined) {
                 errorMsg.style.display = 'none';
             }
             stockData();
         } else {
-            errorMsg.innerHTML = "error: add empty string to the watch list."
+            errorMsg.innerHTML = "error: add empty string to the watch list.";
         }
     })
 }
 
 function addClick() {
-    //console.log("adding click");
     let table = document.getElementById("share-data");
     let symbol = document.getElementsByClassName("symbol");
     for (let a = 0; a < symbol.length; a++) {
@@ -151,26 +182,34 @@ function addClick() {
         for (let j = 0, y = 1; j < y; j++) {
             table.rows[i].cells[j].addEventListener("click", function () {
                 selectedStock = this.innerHTML;
-                stockNews(selectedStock);
+                if (selectedStock !== undefined) {
+                    stockNews(selectedStock);
+                }
                 //console.log(selectedStock);
             });
         }
     }
 }
 
+function initWatchlist() {
+    if (localStorage.getItem("watchlist") === null) {
+        localStorage.setItem("watchlist", JSON.stringify(initArray));
+        //console.log(initArray);
+    }
+    else {
+        initArray = JSON.parse(localStorage.getItem("watchlist"));
+        //console.log(initArray);
+    }
+}
 
+function addToWatchlist() {
+    if (diffArray.length !== 0) {
+        initArray = JSON.parse(localStorage.getItem('watchlist'))
+        //console.log(initArray);
+        initArray.push(diffArray[0]);
+        localStorage.setItem("watchlist", JSON.stringify(initArray));
+    }
+}
 
-
-
-
-
-// async function newUser() {
-//     let response = await fetch("https://randomuser.me/api/?results=2");
-//     let data = await response.json();
-//     console.log(data);
-//     mainREl.innerHTML = rightTemplate(data);
-// }
-
-// newUser();
 
 
