@@ -107,7 +107,6 @@ async function stockData() {
         localStorage.setItem("stockData", JSON.stringify(jsonData));
     }
     else if (diffArray.length != 0) {
-        //console.log(diffArray);
         let fetchRes = await fetch(`https://api.aletheiaapi.com/StockData?symbol=${diffArray[0].trim()}&summary=true`, { "method": "GET", "headers": { "key": dataKey, "Accept-Version": "2" } });
 
         diffArray = [];
@@ -189,7 +188,6 @@ function addClick() {
                 if (selectedStock !== undefined) {
                     //stockNews(selectedStock);
                 }
-                //console.log(selectedStock);
             });
         }
     }
@@ -221,7 +219,7 @@ function removeStock() {
     let localWl = JSON.parse(localStorage.getItem('watchlist'));
     let localStk = JSON.parse(localStorage.getItem('stockData'));
 
-    console.log(localWl, localStk);
+    //console.log(localWl, localStk);
 
     rmBtn.addEventListener('click', () => {
         let selectedStock = stockSymbolTxt.value;
