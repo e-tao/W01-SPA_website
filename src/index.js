@@ -15,7 +15,8 @@ import calculate from "./js/calculator";
 import dictionary from "./js/dictionary";
 
 const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
-const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE";
+//const newsKey = "4429f77179msh814d933e67b91fdp14167djsn3ad50564b911"; //if the above key is dead, pls use this new one.
+const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE"; //this one should have another 1000ish calls.
 
 const appEl = document.getElementById("app");
 appEl.innerHTML = layoutTemplate();
@@ -89,7 +90,6 @@ async function stockData() {
         if (today != storeDate) {
             updateData = true;
         }
-
     }
 
     if (localStorage.getItem("stockData") === null || updateData) {
