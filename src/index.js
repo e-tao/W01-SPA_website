@@ -14,8 +14,8 @@ import footer from "./js/footer";
 import calculate from "./js/calculator";
 import dictionary from "./js/dictionary";
 
-const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
-//const newsKey = "4429f77179msh814d933e67b91fdp14167djsn3ad50564b911"; //if the above key is dead, pls use this new one.
+//const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
+const newsKey = "4429f77179msh814d933e67b91fdp14167djsn3ad50564b911";
 const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE"; //this one should have another 1000ish calls.
 
 const appEl = document.getElementById("app");
@@ -61,7 +61,7 @@ let navigate = function (page) {
     if (page === "home") {
         initWatchlist();
         stockData();
-        //stockNews();
+        stockNews();
     } else if (page === 'calculator') {
         let calbtn = document.getElementById('calculate');
         calbtn.addEventListener('click', calculate);
@@ -71,6 +71,8 @@ let navigate = function (page) {
     menuItems.forEach(function (el) {
         el.addEventListener("click", function () {
             navigate(el.dataset.nav);
+            stockNews();
+
         });
     });
 };
@@ -89,6 +91,7 @@ async function stockData() {
 
         if (today != storeDate) {
             updateData = true;
+            localStorage.setItem('timestamp', today);
         }
     }
 
@@ -127,16 +130,21 @@ async function stockData() {
     addStock();
     removeStock();
     addChangeColor();
+    updateData = false;
 }
 
 async function stockNews(selectedStock) {
-    // let selection = selectedStock;
-    // console.log(selectedStock);
+    document.getElementById("main-left").style.height = "auto";
+    let mrHeight = document.getElementById("main-left").offsetHeight;
+    let noNews = Math.floor(mrHeight / 100);
+    console.log(mrHeight);
+    console.log(noNews);
+
     let fetchUrl;
     if (selectedStock !== undefined) {
-        fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=" + selectedStock.trim() + "&until=0&since=0&size=4&number=1"
+        fetchUrl = `https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=${selectedStock.trim()}&until=0&since=0&size=${noNews}&number=1`
     } else {
-        fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-trending?until=0&since=0&size=4";
+        fetchUrl = `https://seeking-alpha.p.rapidapi.com/news/v2/list-trending?until=0&since=0&size=${noNews}`;
     }
 
     let nFetch = await fetch(fetchUrl, {
@@ -187,7 +195,7 @@ function addClick() {
                 selectedStock = this.innerHTML;
                 stockSymbolTxt.value = selectedStock;
                 if (selectedStock !== undefined) {
-                    //stockNews(selectedStock);
+                    stockNews(selectedStock);
                 }
             });
         }
@@ -257,7 +265,6 @@ function removeStock() {
         localStorage.setItem('stockData', JSON.stringify(localStk));
         stockData();
     })
-
 }
 
 

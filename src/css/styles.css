@@ -74,6 +74,7 @@ ul#nav>li{
     grid-area: left;
     display: flex;
     flex-direction: column;
+    height: auto;
 }
 
 #current-market{
@@ -106,17 +107,18 @@ ul#nav>li{
     flex-direction: column;
 }
 
-#news, #subscribe{
+#subscribe{
     margin:15px;
     height:100px;
     border-radius: 5px;
 }
 
 #news{
-    min-height: 400px;
+    height:auto;
     display: flex;
     flex-direction: column;
     justify-content: left;
+    margin:15px;
     margin-bottom: 20px;
 }
 
