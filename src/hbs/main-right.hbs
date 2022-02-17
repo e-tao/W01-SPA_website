@@ -2,7 +2,9 @@
 
     {{#each .}}
     {{#if attributes.gettyImageUrl}}
-    <div><img src="{{attributes.gettyImageUrl}}" />{{attributes.title}}</div>
+    <a href="https://seekingalpha.com{{links.self}}" target="_blank">
+        <div><img src="{{attributes.gettyImageUrl}}" />{{attributes.title}}</div>
+    </a>
     {{/if}}
     {{/each}}
 

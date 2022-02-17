@@ -6,11 +6,13 @@ import leftTemplate from "./hbs/main-left.hbs";
 import rightTemplate from "./hbs/main-right.hbs";
 import footerTemplate from "./hbs/footer.hbs";
 import calculatorPage from "./hbs/calculator.hbs";
+import dictionaryPage from "./hbs/dictionary.hbs"
 import aboutPage from "./hbs/about.hbs";
 import header from "./js/header";
 import nav from "./js/nav";
 import footer from "./js/footer";
 import calculate from "./js/calculator";
+import dictionary from "./js/dictionary";
 
 const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
 const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE";
@@ -30,8 +32,9 @@ const mainREl = document.getElementById("main-right");
 
 
 const pages = {
-    "home": { title: "Welcome Home", content: leftTemplate() },
-    "calculator": { title: "Shepherd's Retirement", content: calculatorPage() },
+    "home": { title: "Welcome - Daydreamer Investment", content: leftTemplate() },
+    "calculator": { title: "Compound Interest Calculator", content: calculatorPage() },
+    "dictionary": { title: "Investpedia Dictionary", content: dictionaryPage(dictionary) },
     "about": { title: "About the website", content: aboutPage() }
 };
 
@@ -40,6 +43,7 @@ let initArray = ['msft', 'aapl', 'tsla', 'amzn', 'f'];
 let diffArray = [];
 let timestamp = new Date();
 let updateData = false;
+
 
 let navigate = function (page) {
     stockNews(undefined)
@@ -53,11 +57,12 @@ let navigate = function (page) {
     });
     navEl.innerHTML = navTemplate(nav);
     mainLEl.innerHTML = pages[page].content;
+    document.title = pages[page].title;
     if (page === "home") {
         initWatchlist();
         stockData();
         stockNews();
-    } else if (page === 'retirement') {
+    } else if (page === 'calculator') {
         let calbtn = document.getElementById('calculate');
         calbtn.addEventListener('click', calculate);
     }
@@ -184,6 +189,7 @@ function addClick() {
                 selectedStock = this.innerHTML;
                 if (selectedStock !== undefined) {
                     stockNews(selectedStock);
+
                 }
                 //console.log(selectedStock);
             });

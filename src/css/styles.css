@@ -120,6 +120,12 @@ ul#nav>li{
     margin-bottom: 20px;
 }
 
+#news a, #news a:visited{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
 #news img{
     width:100px;
     margin:5px;
@@ -213,25 +219,30 @@ table {
     
   }
 
-  #retirement-container, #about-container{
+  #calculator-container, #about-container, #dict-container{
       display: flex;
       flex-direction: column;
       justify-content: center;
       margin:30px;
   }
 
-  #retirement-container>p, #about-container>p, li{
+  #calculator-container>p, #about-container>p, #dict-container p, li{
       text-align: justify;
       font-size: 15pt;
       margin-bottom: 21px;
   }
 
+  #dict-container h3{
+      margin-top: 10px;
+  }
+
   li{
     margin-bottom: 0;
+    margin-left:10px;
   }
 
   ul{
-    list-style-type: none;
+    list-style-type:circle;
   }
 
   #data-input>.title{
