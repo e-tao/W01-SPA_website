@@ -44,9 +44,8 @@ let diffArray = [];
 let timestamp = new Date();
 let updateData = false;
 
-
 let navigate = function (page) {
-    stockNews(undefined)
+    //stockNews(undefined)
     active = page;
     nav.forEach(function (el) {
         if (el.id == active) {
@@ -61,7 +60,7 @@ let navigate = function (page) {
     if (page === "home") {
         initWatchlist();
         stockData();
-        stockNews();
+        //stockNews();
     } else if (page === 'calculator') {
         let calbtn = document.getElementById('calculate');
         calbtn.addEventListener('click', calculate);
@@ -127,14 +126,15 @@ async function stockData() {
     mainLEl.innerHTML = leftTemplate(jsonData);
     addClick();
     addStock();
+    removeStock();
 }
 
-async function stockNews(selected) {
-    let selection = selected;
-
+async function stockNews(selectedStock) {
+    // let selection = selectedStock;
+    // console.log(selectedStock);
     let fetchUrl;
-    if (selection !== undefined) {
-        fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=" + selection.trim() + "&until=0&since=0&size=4&number=1"
+    if (selectedStock !== undefined) {
+        fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-by-symbol?id=" + selectedStock.trim() + "&until=0&since=0&size=4&number=1"
     } else {
         fetchUrl = "https://seeking-alpha.p.rapidapi.com/news/v2/list-trending?until=0&since=0&size=4";
     }
@@ -157,13 +157,10 @@ function addStock() {
 
     addBtn.addEventListener("click", () => {
         if (stockSymbolTxt.value != "") {
-            if (!initArray.includes(stockSymbolTxt.value.toLowerCase())) {
-                initArray.push(stockSymbolTxt.value.toLowerCase());
-                diffArray.push(stockSymbolTxt.value.toLowerCase());
+            if (!initArray.includes(stockSymbolTxt.value.toLowerCase().trim())) {
+                initArray.push(stockSymbolTxt.value.toLowerCase().trim());
+                diffArray.push(stockSymbolTxt.value.toLowerCase().trim());
                 addToWatchlist();
-            } else {
-                console.log("error");
-                errorMsg.innerHTML = "error: add empty string to the watch list.";
             }
 
             if (errorMsg != undefined) {
@@ -179,6 +176,7 @@ function addStock() {
 function addClick() {
     let table = document.getElementById("share-data");
     let symbol = document.getElementsByClassName("symbol");
+    let stockSymbolTxt = document.getElementById("stock-symbol");
     for (let a = 0; a < symbol.length; a++) {
         symbol.item(a).style.cursor = "pointer";
     }
@@ -187,9 +185,9 @@ function addClick() {
         for (let j = 0, y = 1; j < y; j++) {
             table.rows[i].cells[j].addEventListener("click", function () {
                 selectedStock = this.innerHTML;
+                stockSymbolTxt.value = selectedStock;
                 if (selectedStock !== undefined) {
-                    stockNews(selectedStock);
-
+                    //stockNews(selectedStock);
                 }
                 //console.log(selectedStock);
             });
@@ -217,5 +215,35 @@ function addToWatchlist() {
     }
 }
 
+function removeStock() {
+    let rmBtn = document.getElementById("remove-stock");
+    let stockSymbolTxt = document.getElementById("stock-symbol");
+    let localWl = JSON.parse(localStorage.getItem('watchlist'));
+    let localStk = JSON.parse(localStorage.getItem('stockData'));
+
+    console.log(localWl, localStk);
+
+    rmBtn.addEventListener('click', () => {
+        let selectedStock = stockSymbolTxt.value;
+
+        for (let i = 0; i < localWl.length; i++) {
+            if (localWl[i].toLowerCase().trim() == selectedStock.toLowerCase().trim()) {
+                localWl.splice(i, 1);
+            }
+        }
+
+        for (let j = 0; j < localStk.length; j++) {
+
+            if (localStk[j].Symbol.toLowerCase().trim() == selectedStock.toLowerCase().trim()) {
+                localStk.splice(j, 1);
+            }
+        }
+
+        localStorage.setItem('watchlist', JSON.stringify(localWl));
+        localStorage.setItem('stockData', JSON.stringify(localStk));
+        stockData();
+    })
+
+}
 
 

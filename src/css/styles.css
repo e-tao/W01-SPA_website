@@ -148,7 +148,7 @@ ul#nav>li{
     margin-left: 20px;
 }
 
-#button, #add-stock, #calculate{
+#button, #add-stock, #calculate, #remove-stock{
     border: none;
     width:100px;
     height:30px;
@@ -160,11 +160,16 @@ ul#nav>li{
     cursor: pointer;
 }
 
-#add-stock {
+#add-stock, #remove-stock{
     width: 30px;
     border-radius: 30px;
     font-size: 16pt;
     font-weight: bold;
+}
+
+#remove-stock{
+    margin-left: 0;
+    margin-right: 20px;
 }
 
 
