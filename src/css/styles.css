@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+body {
+        font-family: Calibri, sans-serif;
+}
+
+
 #app {
     max-width: 1080px;
     margin: auto;
