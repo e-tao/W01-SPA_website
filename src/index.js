@@ -126,6 +126,7 @@ async function stockData() {
     addClick();
     addStock();
     removeStock();
+    addChangeColor();
 }
 
 async function stockNews(selectedStock) {
@@ -189,6 +190,21 @@ function addClick() {
                     //stockNews(selectedStock);
                 }
             });
+        }
+    }
+}
+
+function addChangeColor() {
+    let table = document.getElementById("share-data");
+    for (let i = 1, x = table.rows.length; i < x; i++) {
+        for (let j = 6, y = 7; j < y; j++) {
+            if (Number(table.rows[i].cells[j].innerHTML) > 0) {
+                table.rows[i].cells[j].innerHTML += '&nbsp;&#9650';
+                table.rows[i].cells[j].style.color = "green";
+            } else if (Number(table.rows[i].cells[j].innerHTML) < 0) {
+                table.rows[i].cells[j].innerHTML += '&nbsp;&#9660;';
+                table.rows[i].cells[j].style.color = "red";
+            }
         }
     }
 }
