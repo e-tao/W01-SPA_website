@@ -7,7 +7,6 @@ body {
         font-family: Calibri, sans-serif;
 }
 
-
 #app {
     max-width: 1080px;
     margin: auto;
@@ -267,6 +266,3 @@ table {
       height:25px;
       margin-left: 20px;
   }
-
-  
-

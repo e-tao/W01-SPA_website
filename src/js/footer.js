@@ -3,4 +3,3 @@ export default [
     { text: "Contact Us", class: "footer-links" },
     { text: "Terms of Use", class: "footer-links" },
 ]
-

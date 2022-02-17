@@ -15,8 +15,8 @@ import calculate from "./js/calculator";
 import dictionary from "./js/dictionary";
 
 //const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
-const newsKey = "4429f77179msh814d933e67b91fdp14167djsn3ad50564b911";
-const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE"; //this one should have another 1000ish calls.
+const newsKey = "4429f77179msh814d933e67b91fdp14167djsn3ad50564b911"; //it has about 350ish calls left
+const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE"; //it has about 1000ish calls left
 
 const appEl = document.getElementById("app");
 appEl.innerHTML = layoutTemplate();
@@ -30,7 +30,6 @@ footerEl.innerHTML = footerTemplate(footer);
 
 const mainLEl = document.getElementById("main-left");
 const mainREl = document.getElementById("main-right");
-
 
 const pages = {
     "home": { title: "Welcome - Daydreamer Investment", content: leftTemplate() },
@@ -266,5 +265,3 @@ function removeStock() {
         stockData();
     })
 }
-
-
