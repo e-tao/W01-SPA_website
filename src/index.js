@@ -15,7 +15,7 @@ import calculate from "./js/calculator";
 import dictionary from "./js/dictionary";
 
 //const newsKey = "d9eeb81628msh2cd6c852fcdedfdp1bbcecjsna7a40cbc23ef";
-const newsKey = "4429f77179msh814d933e67b91fdp14167djsn3ad50564b911"; //it has about 350ish calls left
+const newsKey = "15d175638dmsh14b65e2102a96dcp1ccd83jsn9dc34f66ddc0"; //it has about 350ish calls left
 const dataKey = "38A132B9FA6F4FFDA8B655D9EC9594AE"; //it has about 1000ish calls left
 
 const appEl = document.getElementById("app");
