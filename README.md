@@ -1,33 +1,35 @@
-# W01-Final Project
+# W01 Project A Website with Webpack, Javascript and Handelbars
 
-Empty project.
+## Introduction
+A single-page web app.
 
-## Building and running on localhost
+The application requirements:
+- Content should be loaded asynchronously via JS AJAX (fetch, XMlHTTPRequest or a library)
+- Include at least two features
+- use 1 HTML file
 
-First install dependencies:
+## Features 
 
-```sh
-npm install
-```
+The application has the following features:
+- Five stocks on the watchlist by default;
+- Data loads once for first time visitor; 
+- The watchlist price info together with a timestamp are stored in localstorage;
+- Same day return user get watchlist, price info and data from localstorage;
+- Date reloads each day on the first visit to reflect new price info;
+- User can amend the watchlist (add or delete), the localstorge is updated to reflect the changes;
+- Watch list symbols are unique;
+- Green and Red color reflect the positive and negative % change in price;
+- News will be related to the company/symbol if one is selected, otherwise it's random news;
+- A compound interest calculator, it assumes the monthly contribution is made at the end of each month;
 
-To create a production build:
+## Tech
+The project uses the following language, toolkit, IDE, database etc...
 
-```sh
-npm run build-prod
-```
+- [Javascript] - The programming language used for this application
+- [Webpack] -  JavaScript module bundler
+- [Handlebars] -  The template engine used in this project
+- [VS Code] - IDE for the development
+- [git] - version control
 
-To create a development build:
-
-```sh
-npm run build-dev
-```
-
-## Running
-
-```sh
-node dist/bundle.js
-```
-
-## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
+## Screenshot
+![Application Screenshot](https://github.com/ethantao-repo/W01-Website_JS-Webpack/blob/master/screenshot/W01-Project_ScreenShoot.PNG?raw=true)
