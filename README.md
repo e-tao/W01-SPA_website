@@ -31,5 +31,10 @@ The project uses the following language, toolkit, IDE, database etc...
 - [VS Code] - IDE for the development
 - [git] - version control
 
+## Free API
+The APIs used in this project are:
+- Seeking Alpha via Rapidapi @ https://rapidapi.com/
+- AletheiaAPI @ https://aletheiaapi.com/
+
 ## Screenshot
 ![Application Screenshot](https://github.com/ethantao-repo/W01-Website_JS-Webpack/blob/master/screenshot/W01-Project_ScreenShoot.PNG?raw=true)
