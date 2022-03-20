@@ -1,4 +1,4 @@
-# W01 Project A Website with Webpack, Javascript and Handelbars
+# W01 Project - Website using Webpack, Javascript, Handelbars and API
 
 ## Introduction
 A single-page web app.
